@@ -1,12 +1,10 @@
-// ===== 1. ÇEVRESEL DEĞİŞKENLER =====
-// .env dosyasını YÜKLE - en başta olmalı!
+
 require('dotenv').config();
 
-// ===== 2. KÜTÜPHANELER =====
+
 const express = require('express');
 const cors = require('cors');
 
-// ===== 3. KATMANLAR (Dependency Injection için import) =====
 // DataAccess
 const OmdbMovieDal = require('./src/dataAccess/concrete/omdb/OmdbMovieDal');
 
@@ -18,15 +16,19 @@ const MoviesController = require('./src/webApi/controllers/MoviesController');
 const createMovieRoutes = require('./src/webApi/routes/movieRoutes');
 const errorHandler = require('./src/webApi/middlewares/errorHandler');
 
-// ===== 4. EXPRESS UYGULAMASI =====
+//  EXPRESS UYGULAMASI
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ===== 5. MIDDLEWARE'LER =====
-app.use(cors());            // Frontend ile haberleşmek için CORS izinleri
+// 5. MIDDLEWARE'LER
+app.use(cors({
+    origin: '*', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));          // Frontend ile haberleşmek için CORS izinleri
 app.use(express.json());    // JSON gövdeleri parse et
 
-// ===== 6. DEPENDENCY INJECTION (Bağımlılıkları Birleştir) =====
+// ===== DEPENDENCY INJECTION =====
 // Burada katmanları birbirine bağlıyoruz
 // Bu yapı sayesinde test etmek ve değiştirmek çok kolay
 
@@ -42,7 +44,7 @@ const moviesController = new MoviesController(movieService);
 // 4. Route'ları oluştur
 const movieRoutes = createMovieRoutes(moviesController);
 
-// ===== 7. ROUTE'LARI KAYDET =====
+// =====  ROUTE'LARI KAYDET =====
 app.use('/api/movies', movieRoutes);
 
 // Sağlık kontrolü endpoint'i
@@ -65,11 +67,11 @@ app.use((req, res) => {
     });
 });
 
-// ===== 8. GLOBAL HATA YAKALAYICI =====
+// ===== GLOBAL HATA YAKALAYICI =====
 // Bu en sonda olmalı! Diğer middleware'lerden sonra
 app.use(errorHandler);
 
-// ===== 9. SUNUCUYU BAŞLAT =====
+// =====  SUNUCUYU BAŞLAT =====
 app.listen(PORT, () => {
     console.log('=================================');
     console.log(`🚀 Sunucu çalışıyor: http://localhost:${PORT}`);

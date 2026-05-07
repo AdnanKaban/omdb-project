@@ -1,7 +1,7 @@
 // Backend URL'leri ve sabitler
 export const ApiConstants = {
     // Backend base URL - geliştirme için
-    BASE_URL: 'http://localhost:5000',
+    BASE_URL: 'https://omdb-project-0x4w.onrender.com',
     
     // API endpoint'leri
     ENDPOINTS: {
