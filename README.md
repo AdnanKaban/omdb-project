@@ -40,6 +40,8 @@
 This project follows **N-Tier Layered Architecture** principles, providing clear separation of concerns and maintainability.
 
 ### Backend Architecture (Node.js + Express)
+
+```text
 backend/
 ├── src/
 │   ├── core/                    # Generic utilities & abstractions
@@ -65,7 +67,11 @@ backend/
 │       └── middlewares/         # Error handlers
 │
 └── server.js                    # Dependency Injection & app startup
+```
+
 ### Frontend Architecture (Vanilla JS + ES6 Modules)
+
+```text
 frontend/
 ├── src/
 │   ├── core/                    # Core utilities
@@ -83,6 +89,7 @@ frontend/
 ├── index.html                   # Entry point
 ├── styles.css                   # Glassmorphism styles
 └── app.js                       # Application bootstrap
+```
 ### 🎯 SOLID Principles Applied
 
 - ✅ **Single Responsibility** - Each layer has one clear purpose
